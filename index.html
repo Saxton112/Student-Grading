@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+        <script type='text/javascript' src='scripts/main.js'></script>
+        <style>
+            @media only screen and (max-width: 600px) {
+                label{
+                    display:block;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container" id="mainDiv">
+            <h2>Rate the work</h2>
+            <ul class="nav nav-pills nav-fill" id="tabs">
+                <li id="authorsli" class="active">
+                  <a data-toggle="tab" href="#authors">Authors</a>
+                </li>
+                <li id="baseli">
+                  <a id="basea" data-toggle="tab" href="#baseTasks">Base tasks</a>
+                </li>
+                <li id="addli">
+                  <a id="adda" data-toggle="tab" href="#addTasks">Additional tasks</a>
+                </li>
+                <li id="subli">
+                  <a data-toggle="tab" href="#submission">Submission</a>
+                </li>
+                <li id="prewli">
+                  <a data-toggle="tab" href="#preview">Preview</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div id="authors" class="tab-pane fade in active">
+                    <br>
+                    <div class="form-group row">
+                        <label for="uniid" class="col-sm-3 col-form-label"><h4>Website holder: </h4></label>
+                        <div class="col-sm-5">
+                            <input type="text" id="uniid" name="uniid" class="form-control" placeholder="eg. runest" required>
+                        </div>
+                    </div>
+                    <div class="form-group row" id="teammateDiv">
+                        <div class="col-sm-10 visible" id="addAuthor">
+                            <button type="button" class="btn btn-success" id="addAuthorEv" onclick="addAuthorEv()">Add teammate</button>
+                        </div>
+                    </div>
+                    <div class="form-group row" id="projectDiv">
+                        <div class="col-sm-10 visible" id="makeProject">
+                            <button type="button" class="btn btn-info" id="makeProjectEv" onclick="makeProjectEv()">Done as Project</button>
+                        </div>
+                    </div>
+                    <h4><b>Total points: <span id="totalMainPoints"></span></b></h4>
+                    <br>
+                    <button type="button" id="nextBaseTasks" class="btn btn-primary">Next</button>
+                    <br><br>
+                </div>
+                <div id="baseTasks" class="tab-pane fade">
+                    <!--<div class="form-group row">
+                        <label class="col-sm-6 col-form-label"><h4><b>NB!</b> Animations and sorting give up to 2 points each!</h4></label>
+                    </div>-->
+                    <div class="col-sm-12"><h5><b>NB!</b> Animations and sorting give up to 2 points each!</h5></div><br>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label for="animations" class="col-sm-6 col-form-label"><h4>Animations: </h4></label>
+                            <select class="selectpicker" id="animations">
+                                <option value="none" selected>Choose...</option>
+                                <option value="0">Animations are missing</option>
+                                <option value="0">Animations are implemented, but animate little to nothing</option>
+                                <option value="0">Animations are implemented, but are nauseous or irritating</option>
+                                <option value="2">Animations are beautifully implemented</option>
+                            </select>
+                        </div>
+                        <div class="form-group row">
+                            <label for="sort" class="col-sm-6 col-form-label"><h4>Sorting: </h4></label>
+                            <select class="selectpicker" id="sort">
+                                <option value="none" selected>Choose...</option>
+                                <option value="0">Sorting is missing</option>
+                                <option value="0">Sorting is buggy</option>
+                                <option value="2">Sorting is well-implemented</option>
+                            </select>
+                        </div>
+                        <div class="form-group row">
+                            <label for="timedTasks" class="col-sm-6 col-form-label"><h4>Timed tasks: </h4></label>
+                            <select class="selectpicker" id="timedTasks">
+                                <option value="none" selected>Choose...</option>
+                                <option value="0">Timed tasks are missing</option>
+                                <option value="0">Timed tasks lack a timer</option>
+                                <option value="0">Timed tasks lack the task itself</option>
+                                <option value="0">Timed tasks have both task and timer but are buggy</option>
+                                <option value="0">Timed tasks offer no benefits nor penalties</option>
+                                <option value="1">Timed tasks are well-implemented</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label for="healthLoss" class="col-sm-6 col-form-label"><h4>Health loss: </h4></label>
+                            <select class="selectpicker" id="healthLoss">
+                                <option value="none" selected>Choose...</option>
+                                <option value="0">Health loss system is missing</option>
+                                <option value="0">Health loss system is visualized but not functional</option>
+                                <option value="0">Health loss system is functional but not visualized</option>
+                                <option value="1">Health loss system is both functional and visualized</option>
+                            </select>
+                        </div>
+                        <div class="form-group row">
+                            <label for="gameEnding" class="col-sm-6 col-form-label"><h4>Game ending: </h4></label>
+                            <select class="selectpicker" id="gameEnding">
+                                <option value="none" selected>Choose...</option>
+                                <option value="0">Both game ending screen and replay button are missing</option>
+                                <option value="0">Either game ending screen or replay button is missing</option>
+                                <option value="1">Both game ending screen and replay button are present</option>
+                            </select>
+                        </div>
+                        <div class="form-group row">
+                            <label for="queue" class="col-sm-6 col-form-label"><h4>Queue: </h4></label>
+                            <select class="selectpicker" id="queue">
+                                <option value="none" selected>Choose...</option>
+                                <option value="0">Queue is missing</option>
+                                <option value="0">Queue is buggy</option>
+                                <option value="1">Queue is well-implemented</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h4><b>Total points for base tasks: <span id="baseScore">0</span></b></h4>
+                        <h4><b>Total points: <span id="totalBasePoints"></span></b></h4>
+                        <button type="button" id="backTeammate" class="btn btn-primary">Back</button>
+                        <button type="button" id="nextAddTasks" class="btn btn-primary">Next</button>
+                    </div>
+                </div>
+                <div id="addTasks" class="tab-pane fade">
+                    <br>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label for="audioFeedback" class="col-sm-6 col-form-label"><h4>Audio feedback: </h4></label>
+                            <select class="selectpicker" id="audioFeedback">
+                                <option value="none" selected>Choose...</option>
+                                <option value="0">Audio feedback is absent</option>
+                                <option value="0">Audio feedback is irritating</option>
+                                <option value="0">Audio feedback is confusing</option>
+                                <option value="1">Audio feedback is present and self-explanatory</option>
+                            </select>
+                        </div>
+                        <div class="form-group row">
+                            <label for="addTimedTasks" class="col-sm-6 col-form-label"><h4>Timed task quality: </h4></label>
+                            <select class="selectpicker" id="addTimedTasks">
+                                <option value="none" selected>Choose...</option>
+                                <option value="0">Timed tasks are missing</option>
+                                <option value="0">Timed tasks are irritating</option>
+                                <option value="0">Timed tasks make no sense</option>
+                                <option value="0">Timed tasks made me feel depressed</option>
+                                <option value="0">Timed tasks are too hard</option>
+                                <option value="1">Timed tasks are well-thought-out</option>
+                            </select>
+                        </div>
+                        <div class="form-group row">
+                            <label for="gameLogic" class="col-sm-6 col-form-label"><h4>Games logic: </h4></label>
+                            <select class="selectpicker" id="gameLogic">
+                                <option value="none" selected>Choose...</option>
+                                <option value="0">Games logic is confusing</option>
+                                <option value="0">Games logic requires additional explanations</option>
+                                <option value="1">Games logic is self-explanatory</option>
+                            </select>
+                        </div>
+                        <div class="form-group row">
+                            <label for="dragNdrop" class="col-sm-6 col-form-label"><h4>Drag&drop feature: </h4></label>
+                            <select class="selectpicker" id="dragNdrop">
+                                <option value="none" selected>Choose...</option>
+                                <option value="0">Object sorting by drag and drop is missing</option>
+                                <option value="0">Object sorting by drag and drop works incorrectly</option>
+                                <option value="1">Object sorting by drag and drop works correctly</option>
+                            </select>
+                        </div>
+                        <div class="form-group row">
+                            <label for="mobile" class="col-sm-6 col-form-label"><h4>Mobile view: </h4></label>
+                            <select class="selectpicker" id="mobile">
+                                <option value="none" selected>Choose...</option>
+                                <option value="0">Games mobile view is buggy</option>
+                                <option value="0">Games mobile view is beautiful yet not working</option>
+                                <option value="1">Games mobile view is both beautiful and functional</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label for="design" class="col-sm-6 col-form-label"><h4>Design: </h4></label>
+                            <select class="selectpicker" id="design">
+                                <option value="none" selected>Choose...</option>
+                                <option value="0">Design is an eyesore</option>
+                                <option value="1">Design is beautiful</option>
+                            </select>
+                        </div>
+                        <div class="form-group row">
+                            <label for="theme" class="col-sm-6 col-form-label"><h4>Designs theme: </h4></label>
+                            <select class="selectpicker" id="theme">
+                                <option value="none" selected>Choose...</option>
+                                <option value="0">Designs theme is random and does not fit the game at all</option>
+                                <option value="1">Designs theme fits the game perfectly</option>
+                            </select>
+                        </div>
+                        <div class="form-group row">
+                            <label for="appearance" class="col-sm-6 col-form-label"><h4>Object appearances: </h4></label>
+                            <select class="selectpicker" id="appearance">
+                                <option value="none" selected>Choose...</option>
+                                <option value="0">The way objects appear is bad</option>
+                                <option value="1">Object appearance is beautiful</option>
+                            </select>
+                        </div>
+                        <div class="form-group row">
+                            <label for="feedback" class="col-sm-6 col-form-label"><h4>Sorting feedback: </h4></label>
+                            <select class="selectpicker" id="feedback">
+                                <option value="none" selected>Choose...</option>
+                                <option value="0">Sorting feedback is either not present or not understandable</option>
+                                <option value="1">Sorting feedback is present and understandable</option>
+                            </select>
+                        </div>
+                        <div class="form-group row">
+                            <label for="lossFeedback" class="col-sm-6 col-form-label"><h4>Loss feedback: </h4></label>
+                            <select class="selectpicker" id="lossFeedback">
+                                <option value="none" selected>Choose...</option>
+                                <option value="0">Loss feedback is absent or irritating</option>
+                                <option value="1">Loss feedback is present and neat</option>
+                            </select>
+                        </div>
+                        
+                    </div>
+                    <div class="col-md-6">
+                        <h4><b>Total points for additional tasks: <span id="addScore">0</span></b></h4>
+                        <h4><b>Total points: <span id="totalAddPoints"></span></b></h4>
+                        <button type="button" id="backBaseTasks" class="btn btn-primary">Back</button>
+                        <button type="button" id="nextSubmission" class="btn btn-primary">Next</button>
+                    </div>
+                </div>
+                <div id="submission" class="tab-pane fade">
+                    <br>
+                    <div class="form-group row" id="commentDiv">
+                        <div class="col-sm-8 visible" id="addComment">
+                            <label for="comment"><h4>Comment:</h4></label>
+                            <textarea class="form-control" rows="5" id="comment"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row" id="plagDiv">
+                        <div class="col-sm-12 visible" id="addPlagAuthor">
+                            <button type="button" class="btn btn-warning" id="addPlagAuthorEv" onclick="addPlagAuthorEv()">Plagiarism</button>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="late" class="col-sm-3 col-form-label"><h4>Overdue by: </h4></label>
+                        <div class="col-sm-8 visible">
+                            <select class="selectpicker" id="late">
+                                <option value="none" selected>Choose...</option>
+                                <option value="0">On time</option>
+                                <option value="2">One week</option>
+                                <option value="5">More than one week</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="postponement" class="col-sm-3 col-form-label"><h4>Postponement: </h4></label>
+                        <div class="col-sm-8 visible">
+                            <select class="selectpicker" id="postponement">
+                                <option value="none" selected>Choose...</option>
+                                <option value="0">None</option>
+                                <option value="1">One week</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="bonus" class="col-sm-3 col-form-label"><h4>Bonus points: </h4></label>
+                        <div class="col-sm-8 visible">
+                            <select class="selectpicker" id="bonus">
+                                <option value="none" selected>Choose...</option>
+                                <option value="0">No bonus points</option>
+                                <option value="1">One bonus point</option>
+                                <option value="2">Two bonus points</option>
+                                <option value="3">Three bonus points</option>
+                                <option value="4">Four bonus points</option>
+                                <option value="5">Five bonus points</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="bonus" class="col-sm-3 col-form-label"><h4>Minus points: </h4></label>
+                        <div class="col-sm-8 visible">
+                            <select class="selectpicker" id="minus">
+                                <option value="none" selected>Choose...</option>
+                                <option value="0">No minus points</option>
+                                <option value="1">One minus point</option>
+                                <option value="2">Two minus points</option>
+                                <option value="3">Three minus points</option>
+                                <option value="4">Four minus points</option>
+                                <option value="5">Five minus points</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-0">
+                        <h4><b>Total points: <span id="totalSubPoints"></span></b></h4>
+                        <button type="button" id="backAddTasks" class="btn btn-primary">Back</button>
+                        <button type="button" id="nextPreview" class="btn btn-primary">Next</button>
+                    </div>
+                </div>
+                <div id="preview" class="tab-pane fade">
+                    <div class="d-flex justify-content-between">
+                        <h3>Results</h3>
+                        <div class="block">
+                            <div class="form-group row">
+                                <div class="col-sm-8 visible">
+                                    <h4>You have been grading <span id="finalAuthorPreview"></span>.<br>Plagiarism <b><span id="plagiarismPreview">was not </span></b>found.<br>The <span id="authorAmountPreview"></span><b><span id="finalResultPreview"></span></b> with a total of <span id="totalEndPointsPreview"></span>.</h4>
+                                    <div id="jobLinkPreview"></div>
+                                    <button type="button" id="backSubmission" class="btn btn-primary">Back</button>
+                                    <button type="button" id="finish" onclick="results()" class="btn btn-primary">Finish</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container footer" id="results" hidden>
+            <div class="d-flex justify-content-between">
+                <h3>Results</h3>
+                <div class="block">
+                    <div class="form-group row">
+                        <div class="col-sm-8 visible">
+                            <h4>You have been grading <span id="finalAuthor"></span>.<br>Plagiarism <b><span id="plagiarismFinal">was not </span></b>found.<br>The <span id="authorAmount"></span><b><span id="finalResult"></span></b> with a total of <span id="totalEndPoints"></span>.</h4>
+                            <div id="jobLinkFinal"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <input type="text" id="editBool" value="False" hidden>
+        <input type="text" id="editStat" value="False" hidden>
+    </body>
+</html>
